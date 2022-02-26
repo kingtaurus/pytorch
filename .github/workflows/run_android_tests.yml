@@ -3,6 +3,7 @@ name: android-tests
 on:
   pull_request:
   workflow_dispatch:
+  push:
 
 jobs:
 
@@ -14,8 +15,15 @@ jobs:
       - name: print labels
         run: echo "Hello!"
 
+      - name: build PyTorch Android
+        run: |
+          cd ./android
+          export ANDROID_NDK=/Users/runner/Library/Android/sdk/ndk-bundle
+          ./scripts/build_pytorch_android.sh x86
+
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
+          working-directory: ./android
           script: ./gradlew connectedCheck
