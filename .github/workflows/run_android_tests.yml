@@ -24,7 +24,6 @@ jobs:
 
       - name: build PyTorch Android
         run: |
-          cd ./android
           export ANDROID_NDK=/Users/runner/Library/Android/sdk/ndk-bundle
           ./scripts/build_pytorch_android.sh x86
 
@@ -32,5 +31,4 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
-          working-directory: ./android
-          script: ./gradlew connectedCheck
+          script: /android/run_tests.sh
